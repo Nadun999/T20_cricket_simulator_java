@@ -26,9 +26,7 @@ public class Main {
 
         generate_random_match my_match = new generate_random_match();
 
-        ArrayList<Team_Array> the_match = new ArrayList<Team_Array>();
-
-        the_match = my_match.generateRandomMatch(Group_A,Group_B);
+        ArrayList<Team_Array> the_match = my_match.get_random_match(Group_A,Group_B);
 
         for(Team_Array i: the_match){
             System.out.println(i.getTeamName());

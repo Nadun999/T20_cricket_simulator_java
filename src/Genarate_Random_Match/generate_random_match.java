@@ -12,11 +12,8 @@ import java.util.*;
 
 public class generate_random_match {
 
-    public generate_random_match(){
 
-    }
-
-    public ArrayList<Team_Array> generateRandomMatch(Team_Array Group_A[],Team_Array Group_B[]){
+    public ArrayList<Team_Array> get_random_match(Team_Array Group_A[],Team_Array Group_B[]){
 
         //        converting team array into lists
         List<Team_Array> Group_A_list = Arrays.asList(Group_A);
