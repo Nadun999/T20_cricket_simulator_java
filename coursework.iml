@@ -7,5 +7,21 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/jar_files/commons-collections4-4.1.jar!/" />
+          <root url="jar://$MODULE_DIR$/jar_files/poi-3.17.jar!/" />
+          <root url="jar://$MODULE_DIR$/jar_files/poi-ooxml-3.17.jar!/" />
+          <root url="jar://$MODULE_DIR$/jar_files/poi-ooxml-schemas-3.17.jar!/" />
+          <root url="jar://$MODULE_DIR$/jar_files/xmlbeans-2.6.0.jar!/" />
+          <root url="file://$MODULE_DIR$" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$MODULE_DIR$/src" />
+        </SOURCES>
+      </library>
+    </orderEntry>
   </component>
 </module>

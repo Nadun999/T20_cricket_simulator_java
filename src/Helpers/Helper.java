@@ -5,6 +5,9 @@ import java.util.*;
 
 public class Helper {
 
+    Team_Array team_to_bat;
+    Team_Array team_to_bowl;
+
     public ArrayList<Team_Array> get_random_match(Team_Array[] Group_A, Team_Array[] Group_B){
 
         //        converting team array into lists
@@ -51,6 +54,7 @@ public class Helper {
 
     public String[] toss_coin(ArrayList<Team_Array> the_match){
 
+
         String[] toss_outcome = new String[2];
 
         Team_Array visiting_team = the_match.get(0);
@@ -68,14 +72,38 @@ public class Helper {
             toss_outcome[0] = visiting_team.getTeamName();
             toss_outcome[1] = options.get(0);
             System.out.println(toss_outcome[0]+"-- visiting team won the toss and choose to "+options.get(0));
+            if (toss_outcome[1].equals("bat")){
+                team_to_bat = visiting_team;
+                team_to_bowl = home_team;
+            }
+            else {
+                team_to_bat = home_team;
+                team_to_bowl = visiting_team;
+            }
+
         }
         else {
             toss_outcome[0] = home_team.getTeamName();
             toss_outcome[1] = options.get(1);
             System.out.println(toss_outcome[0]+"-- home team won the toss and choose to "+options.get(1));
+            if (toss_outcome[1].equals("bat")){
+                team_to_bat = home_team;
+                team_to_bowl = visiting_team;
+            }
+            else {
+                team_to_bat = visiting_team;
+                team_to_bowl = home_team;
+            }
         }
-
         return toss_outcome;
+    }
+
+
+    public List<Team_Array> get_team_to_bat_and_bowl(){
+
+        List<Team_Array> places = Arrays.asList(team_to_bat,team_to_bowl);
+
+        return places;
     }
 
 }

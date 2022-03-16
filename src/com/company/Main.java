@@ -1,13 +1,15 @@
 package com.company;
 
+import Helpers.Excel_Utility;
 import Helpers.Helper;
 import Models.Team_Array;
 
+import java.io.IOException;
 import java.util.*;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
         Team_Array team1 = new Team_Array("Mumbai_India");
         Team_Array team2 = new Team_Array("Chennai_SouthAfrica");
@@ -19,12 +21,14 @@ public class Main {
         Team_Array team8 = new Team_Array("Sunrisers_SriLanka");
 
 
-//        Assigning teams to the groups
+        //        Assigning teams to the groups
         Team_Array[] Group_A = { team1,team2,team3,team4 };
         Team_Array[] Group_B = { team5,team6,team7,team8 };
 
         Helper cricket_helper = new Helper();
 
+
+        //        Generating a match between the two teams
         ArrayList<Team_Array> the_match = cricket_helper.get_random_match(Group_A,Group_B);
 
         for(Team_Array i: the_match){
@@ -32,11 +36,16 @@ public class Main {
         }
 
 
-//Tossing the coin
+        //        Tossing the coin
         String[] toss_outcome = cricket_helper.toss_coin(the_match);
-//        for(String i: toss_outcome){
-//            System.out.println(i);
-//        }
+
+
+        //        calling team path
+        Excel_Utility eu = new Excel_Utility();
+        eu.getTeamFromExcel("Mumbai_India",true);
+
+
+
 
 
 

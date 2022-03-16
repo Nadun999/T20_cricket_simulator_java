@@ -17,7 +17,7 @@ public class Team_Array {
     }
 
     public File getTeamPath(){
-        Team_File_Path = BasePath + _name + ".xlsx";
+        Team_File_Path = BasePath + _name+"/"+ _name +".xlsx";
         File_Path = new File((Team_File_Path));
         return File_Path;
     }
