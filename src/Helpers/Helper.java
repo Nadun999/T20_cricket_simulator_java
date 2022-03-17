@@ -52,7 +52,7 @@ public class Helper {
     }
 
 
-    public String[] toss_coin(ArrayList<Team_Array> the_match){
+    public List<Team_Array> toss_coin(ArrayList<Team_Array> the_match){
 
 
         String[] toss_outcome = new String[2];
@@ -95,15 +95,15 @@ public class Helper {
                 team_to_bowl = home_team;
             }
         }
-        return toss_outcome;
+        return get_team_to_bat_and_bowl();
     }
 
 
     public List<Team_Array> get_team_to_bat_and_bowl(){
 
-        List<Team_Array> places = Arrays.asList(team_to_bat,team_to_bowl);
+        List<Team_Array> battingBowlingTeams = Arrays.asList(team_to_bat,team_to_bowl);
 
-        return places;
+        return battingBowlingTeams;
     }
 
 }

@@ -2,12 +2,18 @@ package Models;
 
 public class Bowler {
 
-    private String name;
-    private double overs;
-    private int runs;
-    private int wickets;
-    private double economy;
+    public String name;
+    public double overs;
+    public int runs;
+    public int wickets;
+    public double economy;
 
+    public Bowler(){
+        this.overs = 0;
+        this.runs = 0;
+        this.wickets = 0;
+        this.economy = 0;
+    }
 
     public String getName() {
         return name;

@@ -2,6 +2,7 @@ package com.company;
 
 import Helpers.Excel_Utility;
 import Helpers.Helper;
+import Innings.First_Innings;
 import Models.Team_Array;
 
 import java.io.IOException;
@@ -37,12 +38,14 @@ public class Main {
 
 
         //        Tossing the coin
-        String[] toss_outcome = cricket_helper.toss_coin(the_match);
+        List<Team_Array> toss_outcome = cricket_helper.toss_coin(the_match);
 
 
-        //        calling team path
-        Excel_Utility eu = new Excel_Utility();
-        eu.getTeamFromExcel("Mumbai_India",true);
+        //        start the first innings
+        First_Innings firstInnings = new First_Innings(toss_outcome);
+        firstInnings.playFirstInnings();
+
+
 
 
 

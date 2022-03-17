@@ -12,6 +12,9 @@ public class Team_Array {
         _name = TeamName;
     }
 
+    public Team_Array() {
+    }
+
     public String getTeamName(){
         return _name;
     }
