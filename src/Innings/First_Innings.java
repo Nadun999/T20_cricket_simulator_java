@@ -1,16 +1,17 @@
 package Innings;
 
 import Helpers.Excel_Utility;
+import Helpers.Helper;
 import Models.Batsman;
 import Models.Bowler;
 import Models.Team_Array;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class First_Innings {
 
+    Helper cricketHelper = new Helper();
     Team_Array battingInfo = new Team_Array();
     Team_Array bowlingInfo = new Team_Array();
     ArrayList<Batsman> battingTeam = new ArrayList<>();
@@ -24,8 +25,257 @@ public class First_Innings {
     }
 
     public void playFirstInnings() throws IOException {
-        battingTeam = eu.getBattingTeamFromExcel(battingInfo.getTeamName(),true);
+
         bowlingTeam = eu.getBowlingTeamFromExcel(bowlingInfo.getTeamName(),true);
+        battingTeam = eu.getBattingTeamFromExcel(battingInfo.getTeamName(),true);
+
+        Batsman batsman_onstrike = new Batsman();
+        Batsman batsman_offstrike = new Batsman();
+
+        Bowler bowler_onstrike = new Bowler();
+
+        ArrayList<Batsman> yetToBat = new ArrayList();
+        ArrayList<Batsman> dismissedBatsman = new ArrayList();
+        ArrayList<Batsman> batsmanList = new ArrayList();
+
+        ArrayList<Bowler> yetToBowl = new ArrayList();
+        ArrayList<Bowler> bowlerList = new ArrayList();
+
+        int bowlerScore = 0; /*score counting variable for bowler*/
+        int batterScore = 0; /*score counting variable for batsman*/
+
+        yetToBat = battingTeam;
+
+        for (int i = bowlingTeam.size() - 1; i >= 6; i--) {
+            yetToBowl.add(bowlingTeam.get(i));
+//            System.out.println("yetToBowl  "+bowlingTeam.get(i).getName());;
+        }
+
+//      opening batsmen coming to the field
+        batsman_onstrike = yetToBat.get(0);
+        yetToBat.remove(0);
+        batsman_offstrike = yetToBat.get(0);
+        yetToBat.remove(0);
+
+//      opening bowler
+        bowler_onstrike = yetToBowl.get(0);
+        yetToBat.remove(0);
+
+
+        int first_ing_balls = 1;
+        int TOTAL_BALLS = 120;
+        int first_ing_wickets = 0;
+        int TOTAL_WICKETS = 10;
+        int first_ing_total = 0;
+
+
+        while (first_ing_balls <= (TOTAL_BALLS)) {
+            if (first_ing_wickets == TOTAL_WICKETS) {
+                break;
+            }
+            else {
+                if (((first_ing_balls - 1) > 0) && ((first_ing_balls - 1) % 6 == 0) && (yetToBowl.size() > 0)) {
+                    yetToBowl.add(bowler_onstrike);
+                    bowler_onstrike = yetToBowl.get(0);
+                    yetToBowl.remove(0);
+                }
+
+                //get random scores for bowler and batsman
+                Random random = new Random();
+
+                bowlerScore = cricketHelper.genarateBowlerScore();
+                batterScore = cricketHelper.genarateBatterScore();
+                System.out.println("--------batterScore "+batterScore+" --------bowlerScore "+bowlerScore);
+
+
+                //to get more realistic scores in the final result
+                if (batterScore == bowlerScore){
+                     batterScore += cricketHelper.genarateBatterScore();
+                 }
+
+
+                if (bowlerScore == batterScore) {
+
+                    System.out.println("------batsman_onstrike-------------"+batsman_onstrike.getName());
+                    System.out.println("------batsman_offstrike-------------"+batsman_offstrike.getName());
+
+                    //adding wickets to bowler
+                    bowler_onstrike.wickets++;
+
+                    //adding first_ing_balls to batsman
+                    batsman_onstrike.balls++;
+
+                    //adding dismissed bowler name to batsman
+                    batsman_onstrike.bowlerName = bowler_onstrike.getName();
+
+                    //adding method of dismissal to batsman
+                    batsman_onstrike.methodOfDissmal = cricketHelper.methodOfDismissal();
+
+                    //moving the dismissed_batsmen to dismissed_batsmen array
+                    dismissedBatsman.add(batsman_onstrike);
+
+
+                    /**
+                    //fall of wickets
+                     System.out.println('FOW at', first_ing_total, ' --> ', first_ing_wickets + 1, ' on over -', int(first_ing_balls / 6), '.', (first_ing_balls) % 6, batsman_onstrike[0][0]);
+
+                    //appending the FOW data to the graph
+                    graph_first_ing_fow_balls.append(first_ing_balls)
+                    graph_first_ing_fow_total.append(first_ing_total)
+                    **/
+
+                    System.out.println("------before yetToBat-------------");
+                    for(Batsman i: yetToBat){
+                        System.out.println(i.getName()+" "+i.getRuns()+" "+i.getBalls()+" "+i.getMethodOfDissmal());
+                    }
+                    //bring new batsman to the crease(batsman_onstrike)
+                    if (yetToBat.size() > 0) {
+                        batsman_onstrike = yetToBat.get(0);
+                        yetToBat.remove(0);
+                    }
+
+                    System.out.println("------after yetToBat-------------");
+                    for(Batsman i: yetToBat){
+                        System.out.println(i.getName()+" "+i.getRuns()+" "+i.getBalls()+" "+i.getMethodOfDissmal());
+                    }
+
+                    //out - add wicket to wickets
+                    first_ing_wickets ++;
+
+
+                }
+
+                else {
+
+                    //adding batter_score to current_batsman
+                    batsman_onstrike.runs += batterScore;
+
+                    //adding first_ing_balls to current_batsman
+                    batsman_onstrike.balls++;
+
+                    //adding batter_score to current_bowler
+                    bowler_onstrike.runs +=batterScore;
+
+                    //swapping onstrike batsman when strike rotates
+                    if (batterScore == 1 || batterScore ==3) {
+                        Batsman current_batsman = batsman_onstrike;
+                        batsman_onstrike = batsman_offstrike;
+                        batsman_offstrike = current_batsman;
+                    }
+
+                    //add batter score to first_ing_total
+//                    System.out.println("--------first_ing_total "+first_ing_total+" batterScore "+batterScore);
+                    first_ing_total += batterScore;
+//                    System.out.println("--------first_ing_total "+first_ing_total);
+
+                }
+            }
+
+            //adding first_ing_balls to bowler
+            bowler_onstrike.balls ++;
+
+            //adding first_ing_balls to first_ing ball count
+            first_ing_balls ++;
+
+            /**
+            //adding first_ing_total to graph_first_ing_total
+            graph_first_ing_total.append(first_ing_total)
+            **/
+
+        }
+
+        /**
+        //assinging first innings balls to graph
+        graph_first_ing_balls = range(1, first_ing_balls)
+        **/
+
+        /**
+        //last dismissed batsman
+         get the latest batsman from dismissed batsman array
+         **/
+
+        System.out.println("------dismissedBatsman-------------");
+        for(Batsman i: dismissedBatsman){
+            System.out.println(i.getName()+" "+i.getRuns()+" "+i.getBalls()+" "+i.getMethodOfDissmal());
+        }
+
+
+
+        //add dismissed_batsmen to batsman_list
+        batsmanList = dismissedBatsman;
+
+        System.out.println("------batsmanList-------------");
+        for(Batsman i: batsmanList){
+            System.out.println(i.getName()+" "+i.getRuns()+" "+i.getBalls()+" "+i.getMethodOfDissmal());
+        }
+
+        //add each batsman in yet_to_bat to batsman_list array for displaying purposes
+        if (yetToBat.size() > 0) {
+            batsmanList.addAll(yetToBat);
+        }
+
+        //add on and off strike batsmen to batsman_list
+        if (first_ing_wickets != TOTAL_WICKETS) {
+            batsman_onstrike.methodOfDissmal = "* NOT OUT";
+            batsmanList.add(batsman_onstrike);
+
+            batsman_offstrike.methodOfDissmal = "NOT OUT";
+            batsmanList.add(batsman_offstrike);
+        }
+
+//        if (batsman_offstrike.methodOfDissmal == "") {
+//            batsman_offstrike.methodOfDissmal = "NOT OUT";
+//            batsmanList.add(batsman_offstrike);
+//        }
+
+
+
+        //add bowlers to bowler_list_first_ing
+        bowlerList.addAll(yetToBowl);
+        bowlerList.add(bowler_onstrike);
+
+        //sort score_card_first_ing to the original batting order
+        Collections.sort(batsmanList,(o1, o2) -> o1.getBattingOrder().compareTo(o2.getBattingOrder()));
+
+        /**
+        //convert score_card_first_ing to a data frame for displaying
+        df_score_card_first_ing = pd.DataFrame(sorted_list)
+        **/
+
+        /**
+        //converting bowler first_ing_balls to overs
+        for bowler_overs_first_ing in bowler_list_first_ing {
+            bowler_overs_first_ing[1] = str(
+            int((bowler_overs_first_ing[1]) / 6))+'.' + str((bowler_overs_first_ing[1]) % 6)
+        }
+         **/
+
+        /**
+        //additing the economy for bowler
+        for bowler_economy_first_ing in bowler_list_first_ing:
+        bowler_economy_first_ing[4] = round(
+                bowler_economy_first_ing[2]/float(bowler_economy_first_ing[1]), 2)
+         **/
+
+        /**
+        //convert df_bowler_list_first_ing to a data frame for displaying
+                df_bowler_list_first_ing = pd.DataFrame(bowler_list_first_ing)
+
+         **/
+
+        System.out.println("\n\n-------------------------------------------------1st Innings Summary-------------------------------------------");
+        System.out.println("\n");
+        System.out.println("\nTotal-"+ first_ing_total);
+        System.out.println("\nWickets-"+ first_ing_wickets);
+        System.out.println("\nBalls-"+ first_ing_balls);
+
+        System.out.println("-------------------");
+        for(Batsman i: batsmanList){
+            System.out.println(i.getName()+" "+i.getRuns()+" "+i.getBalls()+" "+i.getMethodOfDissmal());
+        }
+
+
     }
 
 }
+

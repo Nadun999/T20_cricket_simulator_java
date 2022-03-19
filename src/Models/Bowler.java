@@ -3,13 +3,13 @@ package Models;
 public class Bowler {
 
     public String name;
-    public double overs;
+    public double balls;
     public int runs;
     public int wickets;
     public double economy;
 
     public Bowler(){
-        this.overs = 0;
+        this.balls = 0;
         this.runs = 0;
         this.wickets = 0;
         this.economy = 0;
@@ -23,12 +23,8 @@ public class Bowler {
         this.name = name;
     }
 
-    public double getOvers() {
-        return overs;
-    }
-
-    public void setOvers(double overs) {
-        this.overs = overs;
+    public double getBalls() {
+        return balls;
     }
 
     public int getRuns() {
@@ -53,5 +49,10 @@ public class Bowler {
 
     public void setEconomy(double economy) {
         this.economy = economy;
+    }
+
+    public String getOvers(){
+
+        return "";
     }
 }

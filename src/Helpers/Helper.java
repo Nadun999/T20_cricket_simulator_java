@@ -106,4 +106,26 @@ public class Helper {
         return battingBowlingTeams;
     }
 
+
+    public String methodOfDismissal(){
+        List<String> methodOfDismissal = Arrays.asList("Bowled", "Caught", "LBW");
+        Collections.shuffle(methodOfDismissal);
+
+        return methodOfDismissal.get(0);
+    }
+
+    public int genarateBatterScore(){
+        List<Integer> batterScore = Arrays.asList(0,1,2,3,4,5,6);
+        Collections.shuffle(batterScore);
+
+        return batterScore.get(0);
+    }
+
+    public int genarateBowlerScore(){
+        List<Integer> bowlerScore = Arrays.asList(1,2,3,4,5,6);
+        Collections.shuffle(bowlerScore);
+
+        return bowlerScore.get(0);
+    }
+
 }

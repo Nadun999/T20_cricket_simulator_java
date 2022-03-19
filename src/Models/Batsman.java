@@ -7,8 +7,8 @@ public class Batsman {
     public int balls;
     public String methodOfDissmal;
     public String bowlerName;
-    public int battingOrder;
-//    private boolean on_strike;
+    public Integer battingOrder;
+//    public boolean on_strike;
 
 
     public Batsman(){
@@ -58,7 +58,7 @@ public class Batsman {
         this.bowlerName = bowlerName;
     }
 
-    public int getBattingOrder() {
+    public Integer getBattingOrder() {
         return battingOrder;
     }
 

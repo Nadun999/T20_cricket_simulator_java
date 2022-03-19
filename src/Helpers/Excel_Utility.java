@@ -62,13 +62,13 @@ public class Excel_Utility {
         }
 
 
-        for (Batsman i : battingTeam) {
-            System.out.println(i.name);
-            System.out.println(i.runs);
-            System.out.println(i.balls);
-            System.out.println(i.methodOfDissmal);
-            System.out.println(i.battingOrder);
-        }
+//        for (Batsman i : battingTeam) {
+//            System.out.println(i.name);
+//            System.out.println(i.runs);
+//            System.out.println(i.balls);
+//            System.out.println(i.methodOfDissmal);
+//            System.out.println(i.battingOrder);
+//        }
 
 
         wb.close();
@@ -110,13 +110,13 @@ public class Excel_Utility {
         }
 
 
-        for(Bowler i: bowlingTeam) {
-            System.out.println(i.name);
-            System.out.println(i.overs);
-            System.out.println(i.runs);
-            System.out.println(i.wickets);
-            System.out.println(i.economy);
-        }
+//        for(Bowler i: bowlingTeam) {
+//            System.out.println(i.name);
+//            System.out.println(i.overs);
+//            System.out.println(i.runs);
+//            System.out.println(i.wickets);
+//            System.out.println(i.economy);
+//        }
 
         wb.close();
         fis.close();
