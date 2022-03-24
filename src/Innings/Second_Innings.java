@@ -9,7 +9,7 @@ import Models.Team_Array;
 import java.io.IOException;
 import java.util.*;
 
-public class First_Innings {
+public class Second_Innings {
 
     Helper cricketHelper = new Helper();
     Team_Array battingInfo = new Team_Array();
@@ -18,15 +18,15 @@ public class First_Innings {
     ArrayList<Bowler> bowlingTeam = new ArrayList<>();
     Excel_Utility eu = new Excel_Utility();
 
-    public int Total1;
+    public int Total2;
 
 
-    public First_Innings(List<Team_Array> toss_outcome) throws IOException {
-        battingInfo = toss_outcome.get(0);
-        bowlingInfo = toss_outcome.get(1);
+    public Second_Innings(List<Team_Array> toss_outcome) throws IOException {
+        battingInfo = toss_outcome.get(1);
+        bowlingInfo = toss_outcome.get(0);
     }
 
-    public void playFirstInnings() throws IOException {
+    public void playSecondInnings(int Total) throws IOException {
 
         bowlingTeam = eu.getBowlingTeamFromExcel(bowlingInfo.getTeamName(),true);
         battingTeam = eu.getBattingTeamFromExcel(battingInfo.getTeamName(),true);
@@ -64,27 +64,26 @@ public class First_Innings {
         yetToBowl.remove(0);
 
 
-        int first_ing_balls = 1;
+        int second_ing_balls = 1;
         int TOTAL_BALLS = 120;
-        int first_ing_wickets = 0;
+        int second_ing_wickets = 0;
         int TOTAL_WICKETS = 10;
-        int first_ing_total = 0;
+        int second_ing_total = 0;
 
 
-        while (first_ing_balls < (TOTAL_BALLS+1)) {
-            if (first_ing_wickets == TOTAL_WICKETS) {
+        while (second_ing_balls < (TOTAL_BALLS+1)) {
+            if ((second_ing_wickets == TOTAL_WICKETS) || (second_ing_total > Total)) {
                 break;
             }
             else {
-                if (((first_ing_balls - 1) > 0) && ((first_ing_balls - 1) % 6 == 0) && (yetToBowl.size() > 0)) {
+                if (((second_ing_balls - 1) > 0) && ((second_ing_balls - 1) % 6 == 0) && (yetToBowl.size() > 0)) {
                     yetToBowl.add(bowler_onstrike);
                     bowler_onstrike = yetToBowl.get(0);
                     yetToBowl.remove(0);
 //                    System.out.println("OVER----------------------------------------"+first_ing_balls);
-                }
-//                else {
+                }else {
 //                    System.out.println("NOT OVER---------------------------------"+first_ing_balls);
-//                }
+                }
 
                 //get random scores for bowler and batsman
                 Random random = new Random();
@@ -106,7 +105,7 @@ public class First_Innings {
 //                    System.out.println("------batsman_offstrike-------------"+batsman_offstrike.getName());
 
                     //out - add wicket to wickets
-                    first_ing_wickets ++;
+                    second_ing_wickets ++;
 
                     //adding wickets to bowler
                     bowler_onstrike.wickets++;
@@ -125,20 +124,21 @@ public class First_Innings {
 //                        batsman_onstrike.methodOfDissmal = "* NOT OUT";
                         dismissedBatsman.add(batsman_onstrike);
 //                        System.out.println("----------------------------If-----------"+batsman_onstrike.getName());
-                    }else {
-//                        System.out.println("-----------------------------Else-----------"+batsman_onstrike.getName());
                     }
+//                    else {
+//                        System.out.println("-----------------------------Else-----------"+batsman_onstrike.getName());
+//                    }
 //
 
 
                     /**
-                    //fall of wickets
+                     //fall of wickets
                      System.out.println('FOW at', first_ing_total, ' --> ', first_ing_wickets + 1, ' on over -', int(first_ing_balls / 6), '.', (first_ing_balls) % 6, batsman_onstrike[0][0]);
 
-                    //appending the FOW data to the graph
-                    graph_first_ing_fow_balls.append(first_ing_balls)
-                    graph_first_ing_fow_total.append(first_ing_total)
-                    **/
+                     //appending the FOW data to the graph
+                     graph_first_ing_fow_balls.append(first_ing_balls)
+                     graph_first_ing_fow_total.append(first_ing_total)
+                     **/
 
 //                    System.out.println("------before yetToBat-------------");
 //                    for(Batsman i: yetToBat){
@@ -160,7 +160,7 @@ public class First_Innings {
                 else {
 
                     //add batter score to first_ing_total
-                    first_ing_total += batterScore;
+                    second_ing_total += batterScore;
 
                     //adding batter_score to current_batsman
                     batsman_onstrike.runs += batterScore;
@@ -185,22 +185,22 @@ public class First_Innings {
             bowler_onstrike.balls ++;
 
             //adding first_ing_balls to first_ing ball count
-            first_ing_balls ++;
+            second_ing_balls ++;
 
             /**
-            //adding first_ing_total to graph_first_ing_total
-            graph_first_ing_total.append(first_ing_total)
-            **/
+             //adding first_ing_total to graph_first_ing_total
+             graph_first_ing_total.append(first_ing_total)
+             **/
 
         }
 
         /**
-        //assinging first innings balls to graph
-        graph_first_ing_balls = range(1, first_ing_balls)
-        **/
+         //assinging first innings balls to graph
+         graph_first_ing_balls = range(1, first_ing_balls)
+         **/
 
         /**
-        //last dismissed batsman
+         //last dismissed batsman
          get the latest batsman from dismissed batsman array
          **/
 
@@ -219,7 +219,7 @@ public class First_Innings {
 //        }
 
         //add on and off strike batsmen to batsman_list
-        if (first_ing_wickets != TOTAL_WICKETS) {
+        if (second_ing_wickets != TOTAL_WICKETS) {
             if (!batsmanList.contains(batsman_onstrike)){
                 batsman_onstrike.methodOfDissmal = "* NOT OUT";
                 batsmanList.add(batsman_onstrike);
@@ -242,36 +242,36 @@ public class First_Innings {
         Collections.sort(batsmanList,(o1, o2) -> o1.getBattingOrder().compareTo(o2.getBattingOrder()));
 
         /**
-        //convert score_card_first_ing to a data frame for displaying
-        df_score_card_first_ing = pd.DataFrame(sorted_list)
-        **/
-
-        /**
-        //converting bowler first_ing_balls to overs
-        for bowler_overs_first_ing in bowler_list_first_ing {
-            bowler_overs_first_ing[1] = str(
-            int((bowler_overs_first_ing[1]) / 6))+'.' + str((bowler_overs_first_ing[1]) % 6)
-        }
+         //convert score_card_first_ing to a data frame for displaying
+         df_score_card_first_ing = pd.DataFrame(sorted_list)
          **/
 
         /**
-        //additing the economy for bowler
-        for bowler_economy_first_ing in bowler_list_first_ing:
-        bowler_economy_first_ing[4] = round(
-                bowler_economy_first_ing[2]/float(bowler_economy_first_ing[1]), 2)
+         //converting bowler first_ing_balls to overs
+         for bowler_overs_first_ing in bowler_list_first_ing {
+         bowler_overs_first_ing[1] = str(
+         int((bowler_overs_first_ing[1]) / 6))+'.' + str((bowler_overs_first_ing[1]) % 6)
+         }
          **/
 
         /**
-        //convert df_bowler_list_first_ing to a data frame for displaying
-                df_bowler_list_first_ing = pd.DataFrame(bowler_list_first_ing)
+         //additing the economy for bowler
+         for bowler_economy_first_ing in bowler_list_first_ing:
+         bowler_economy_first_ing[4] = round(
+         bowler_economy_first_ing[2]/float(bowler_economy_first_ing[1]), 2)
+         **/
+
+        /**
+         //convert df_bowler_list_first_ing to a data frame for displaying
+         df_bowler_list_first_ing = pd.DataFrame(bowler_list_first_ing)
 
          **/
 
-        System.out.println("\n\n-------------------------------------------------1st Innings Summary-------------------------------------------");
+        System.out.println("\n\n-------------------------------------------------2nd Innings Summary-------------------------------------------");
         System.out.println("\n");
-        System.out.println("\nTotal-"+ first_ing_total);
-        System.out.println("\nWickets-"+ first_ing_wickets);
-        System.out.println("\nBalls-"+ (first_ing_balls-1));
+        System.out.println("\nTotal-"+ second_ing_total);
+        System.out.println("\nWickets-"+ second_ing_wickets);
+        System.out.println("\nBalls-"+ (second_ing_balls-1));
 
         System.out.println("-------------------");
         for(Batsman i: batsmanList){
@@ -283,8 +283,7 @@ public class First_Innings {
             System.out.println(i.getName()+" "+i.getRuns()+" "+i.getBalls()+" "+i.getWickets()+" "+i.getEconomy());
         }
 
-
-        Total1 = first_ing_total;
+        Total2 = second_ing_total;
     }
 
 }

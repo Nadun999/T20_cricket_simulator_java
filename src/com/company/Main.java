@@ -3,6 +3,8 @@ package com.company;
 import Helpers.Excel_Utility;
 import Helpers.Helper;
 import Innings.First_Innings;
+import Innings.Second_Innings;
+import Match_Summary.match_summary;
 import Models.Team_Array;
 
 import java.io.IOException;
@@ -45,7 +47,13 @@ public class Main {
         First_Innings firstInnings = new First_Innings(toss_outcome);
         firstInnings.playFirstInnings();
 
+        //        start the second innings
+        Second_Innings secondInnings = new Second_Innings(toss_outcome);
+        secondInnings.playSecondInnings(firstInnings.Total1);
 
+        //        match summary
+        match_summary matchSummary = new match_summary();
+        matchSummary.matchSummary(firstInnings.Total1, secondInnings.Total2);
 
 
 
