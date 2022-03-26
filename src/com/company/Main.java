@@ -6,13 +6,14 @@ import Innings.First_Innings;
 import Innings.Second_Innings;
 import Match_Summary.match_summary;
 import Models.Team_Array;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 
 import java.io.IOException;
 import java.util.*;
 
 public class Main {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, InvalidFormatException {
 
         Team_Array team1 = new Team_Array("Mumbai_India");
         Team_Array team2 = new Team_Array("Chennai_SouthAfrica");
@@ -55,6 +56,9 @@ public class Main {
         match_summary matchSummary = new match_summary();
         matchSummary.matchSummary(firstInnings.Total1, secondInnings.Total2);
 
+
+        Excel_Utility eu = new Excel_Utility();
+        eu.writeExcel();
 
 
 

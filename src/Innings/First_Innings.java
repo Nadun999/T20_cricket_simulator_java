@@ -20,6 +20,23 @@ public class First_Innings {
 
     public int Total1;
 
+    int TOTAL_BALLS = 120;
+    int TOTAL_WICKETS = 10;
+    private int first_ing_total = 0;
+    private int first_ing_balls = 1;
+    private int first_ing_wickets = 0;
+
+
+    public int getFirst_ing_total() {
+        return first_ing_total;
+    }
+    public int getFirst_ing_balls() {
+        return first_ing_balls;
+    }
+    public int getFirst_ing_wickets() {
+        return first_ing_wickets;
+    }
+
 
     public First_Innings(List<Team_Array> toss_outcome) throws IOException {
         battingInfo = toss_outcome.get(0);
@@ -43,11 +60,20 @@ public class First_Innings {
         ArrayList<Bowler> yetToBowl = new ArrayList();
         ArrayList<Bowler> bowlerList = new ArrayList();
 
+//        int first_ing_balls = 1;
+//        int TOTAL_BALLS = 120;
+//        int first_ing_wickets = 0;
+//        int TOTAL_WICKETS = 10;
+//        int first_ing_total = 0;
+
+
         int bowlerScore = 0; /*score counting variable for bowler*/
         int batterScore = 0; /*score counting variable for batsman*/
 
+
         yetToBat = battingTeam;
 
+//        getting the last 5 players from bowling team
         for (int i = bowlingTeam.size() - 1; i >= 6; i--) {
             yetToBowl.add(bowlingTeam.get(i));
 //            System.out.println("yetToBowl  "+bowlingTeam.get(i).getName());;
@@ -64,11 +90,6 @@ public class First_Innings {
         yetToBowl.remove(0);
 
 
-        int first_ing_balls = 1;
-        int TOTAL_BALLS = 120;
-        int first_ing_wickets = 0;
-        int TOTAL_WICKETS = 10;
-        int first_ing_total = 0;
 
 
         while (first_ing_balls < (TOTAL_BALLS+1)) {

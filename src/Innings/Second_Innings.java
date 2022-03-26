@@ -20,6 +20,24 @@ public class Second_Innings {
 
     public int Total2;
 
+    int TOTAL_BALLS = 120;
+    int TOTAL_WICKETS = 10;
+    private int second_ing_total = 0;
+    private int second_ing_balls = 1;
+    private int second_ing_wickets = 0;
+
+
+    public int getSecond_ing_total() {
+        return second_ing_total;
+    }
+    public int getSecond_ing_balls() {
+        return second_ing_balls;
+    }
+    public int getSecond_ing_wickets() {
+        return second_ing_wickets;
+    }
+
+
 
     public Second_Innings(List<Team_Array> toss_outcome) throws IOException {
         battingInfo = toss_outcome.get(1);
@@ -64,11 +82,6 @@ public class Second_Innings {
         yetToBowl.remove(0);
 
 
-        int second_ing_balls = 1;
-        int TOTAL_BALLS = 120;
-        int second_ing_wickets = 0;
-        int TOTAL_WICKETS = 10;
-        int second_ing_total = 0;
 
 
         while (second_ing_balls < (TOTAL_BALLS+1)) {

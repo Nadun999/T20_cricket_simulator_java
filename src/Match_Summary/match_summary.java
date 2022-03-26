@@ -5,7 +5,8 @@ public class match_summary {
     public void matchSummary(int Total1,int Total2){
 
         System.out.println("\n------------------------------------------------------------Match Result----------------------------------------------\n");
-        System.out.println(Total1+" \n"+Total2);
+//        System.out.println(Total1+" \n"+Total2);
+
 //        if (Total2 > Total1) {
 //            match_result = str(team_to_bowl[0].replace('_', ' ') + ' Won by ' + str(TOTAL_WICKETS - second_ing_wickets) + ' wickets')
 //            print(match_result)

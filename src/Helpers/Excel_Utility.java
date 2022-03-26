@@ -4,20 +4,24 @@ import Models.Batsman;
 import Models.Bowler;
 import Models.Team_Array;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 
 public class Excel_Utility {
+
+    private static XSSFWorkbook wb;
+    private static XSSFSheet sh;
+    private static FileInputStream fis;
+    private static FileOutputStream fos;
+    private static Row row;
+    private static Cell cell;
 
 
     public Excel_Utility() throws IOException {
@@ -123,6 +127,51 @@ public class Excel_Utility {
 
         return bowlingTeam;
     }
-}
 
+
+    public void writeExcel() throws IOException, InvalidFormatException {
+
+        fis = new FileInputStream(("E:/IIT/1st Year/2nd Trimester/CM1601 [PRO] Programming Fundamentals/CW/coursework/tournament/points_table.xlsx"));
+        wb = (XSSFWorkbook) WorkbookFactory.create(fis);
+        sh = wb.getSheet("Sheet1");
+        int noOfRows = sh.getLastRowNum();
+        System.out.println(noOfRows);
+
+//        row = sh.createRow(10);
+//        cell = row.createCell(10);
+//        cell.setCellValue("QAV");
+//        System.out.println(cell.getStringCellValue());
+//        fos = new FileOutputStream("E:/IIT/1st Year/2nd Trimester/CM1601 [PRO] Programming Fundamentals/CW/coursework/tournament/points_table.xlsx");
+//        wb.write(fos);
+//        fos.flush();
+//        fos.close();
+//        System.out.println("Done");
+
+        findRow(sh,"Mumbai_India");
+
+
+    }
+
+    private static void findRow(XSSFSheet sheet, String cellContent) throws IOException {
+        for (Row row : sheet) {
+            for (Cell cell : row) {
+                if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
+                    if (cell.getRichStringCellValue().getString().trim().equals(cellContent)) {
+//                        int currentMatchCount = Integer.parseInt(String.valueOf(row.getCell(1).getRichStringCellValue()));
+                        int currentMatchCount = (int) row.getCell(1).getNumericCellValue();
+                        currentMatchCount++;
+                        row.getCell(1).setCellValue(currentMatchCount);
+                        fos = new FileOutputStream("E:/IIT/1st Year/2nd Trimester/CM1601 [PRO] Programming Fundamentals/CW/coursework/tournament/points_table.xlsx");
+                        wb.write(fos);
+                        fos.flush();
+                        fos.close();
+                        System.out.println("Done");
+                        //                        System.out.println(cell.getRichStringCellValue().getString()+"--------------------");
+                    }
+                }
+            }
+        }
+    }
+
+}
 
