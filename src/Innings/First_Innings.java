@@ -18,10 +18,50 @@ public class First_Innings {
     ArrayList<Bowler> bowlingTeam = new ArrayList<>();
     Excel_Utility eu = new Excel_Utility();
 
+
+    public Team_Array getBattingInfo() {
+        return battingInfo;
+    }
+
+    public void setBattingInfo(Team_Array battingInfo) {
+        this.battingInfo = battingInfo;
+    }
+
+    public Team_Array getBowlingInfo() {
+        return bowlingInfo;
+    }
+
+    public void setBowlingInfo(Team_Array bowlingInfo) {
+        this.bowlingInfo = bowlingInfo;
+    }
+
+
+
+    public ArrayList<Batsman> getBattingTeam() {
+        return battingTeam;
+    }
+
+    public void setBattingTeam(ArrayList<Batsman> battingTeam) {
+        this.battingTeam = battingTeam;
+    }
+
+    public ArrayList<Bowler> getBowlingTeam() {
+        return bowlingTeam;
+    }
+
+    public void setBowlingTeam(ArrayList<Bowler> bowlingTeam) {
+        this.bowlingTeam = bowlingTeam;
+    }
+
+    public void setFirst_ing_total(int first_ing_total) {
+        this.first_ing_total = first_ing_total;
+    }
+
+
     public int Total1;
 
-    int TOTAL_BALLS = 120;
-    int TOTAL_WICKETS = 10;
+    protected int TOTAL_BALLS = 120;
+    protected int TOTAL_WICKETS = 10;
     private int first_ing_total = 0;
     private int first_ing_balls = 1;
     private int first_ing_wickets = 0;
@@ -41,6 +81,10 @@ public class First_Innings {
     public First_Innings(List<Team_Array> toss_outcome) throws IOException {
         battingInfo = toss_outcome.get(0);
         bowlingInfo = toss_outcome.get(1);
+    }
+
+    public void getFirstInningsSummary(){
+
     }
 
     public void playFirstInnings() throws IOException {

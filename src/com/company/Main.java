@@ -5,6 +5,7 @@ import Helpers.Helper;
 import Innings.First_Innings;
 import Innings.Second_Innings;
 import Match_Summary.match_summary;
+import Models.InningsSummary;
 import Models.Team_Array;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 
@@ -52,9 +53,25 @@ public class Main {
         Second_Innings secondInnings = new Second_Innings(toss_outcome);
         secondInnings.playSecondInnings(firstInnings.Total1);
 
+
+        InningsSummary firstInningsSummary = new InningsSummary(){{
+            setBattingTeamName(firstInnings.getBattingInfo().getTeamName());
+            setBowlingTeamName(firstInnings.getBowlingInfo().getTeamName());
+            setTotalRuns(firstInnings.getFirst_ing_total());
+        }};
+
+        InningsSummary secondInningsSummary = new InningsSummary(){{
+            setBattingTeamName(secondInnings.getBattingInfo().getTeamName());
+            setBowlingTeamName(secondInnings.getBowlingInfo().getTeamName());
+            setWickets(secondInnings.getSecond_ing_wickets());
+            setTotalRuns(secondInnings.getSecond_ing_total());
+        }};
+
+
+
         //        match summary
         match_summary matchSummary = new match_summary();
-        matchSummary.matchSummary(firstInnings.Total1, secondInnings.Total2);
+        matchSummary.matchSummary(firstInningsSummary,secondInningsSummary);
 
 
         Excel_Utility eu = new Excel_Utility();

@@ -27,6 +27,49 @@ public class Second_Innings {
     private int second_ing_wickets = 0;
 
 
+    public Team_Array getBattingInfo() {
+        return battingInfo;
+    }
+
+    public void setBattingInfo(Team_Array battingInfo) {
+        this.battingInfo = battingInfo;
+    }
+
+    public Team_Array getBowlingInfo() {
+        return bowlingInfo;
+    }
+
+    public void setBowlingInfo(Team_Array bowlingInfo) {
+        this.bowlingInfo = bowlingInfo;
+    }
+
+
+    public ArrayList<Batsman> getBattingTeam() {
+        return battingTeam;
+    }
+
+    public void setBattingTeam(ArrayList<Batsman> battingTeam) {
+        this.battingTeam = battingTeam;
+    }
+
+    public ArrayList<Bowler> getBowlingTeam() {
+        return bowlingTeam;
+    }
+
+    public void setBowlingTeam(ArrayList<Bowler> bowlingTeam) {
+        this.bowlingTeam = bowlingTeam;
+    }
+
+    public void setSecond_ing_total(int second_ing_total) {
+        this.second_ing_total = second_ing_total;
+    }
+
+    public void setSecond_ing_wickets(int second_ing_wickets) {
+        this.second_ing_wickets = second_ing_wickets;
+    }
+
+
+
     public int getSecond_ing_total() {
         return second_ing_total;
     }

@@ -1,27 +1,31 @@
 package Match_Summary;
 
+import Models.InningsSummary;
+
 public class match_summary {
 
-    public void matchSummary(int Total1,int Total2){
+    public void matchSummary(InningsSummary firstInningsSummary, InningsSummary secondInningsSummary){
 
         System.out.println("\n------------------------------------------------------------Match Result----------------------------------------------\n");
 //        System.out.println(Total1+" \n"+Total2);
 
-//        if (Total2 > Total1) {
-//            match_result = str(team_to_bowl[0].replace('_', ' ') + ' Won by ' + str(TOTAL_WICKETS - second_ing_wickets) + ' wickets')
-//            print(match_result)
-//
+        if (secondInningsSummary.getTotalRuns() > firstInningsSummary.getTotalRuns()) {
+
+            String match_result = secondInningsSummary.getBattingTeamName().replace('_', ' ') + " Won by " + (firstInningsSummary.getTOTAL_WICKETS() - secondInningsSummary.getWickets()) + " wickets";
+            System.out.println(match_result);
+
 //            winning_team = team_to_bowl
 //            losing_team = team_to_bat
-//        }
+        }
 //
-//        elif (Total2 < Total1) {
-//            match_result = str(team_to_bat[0].replace('_', ' ') + ' Won by ' + str(first_ing_total - second_ing_total) + ' runs')
-//            print(match_result)
-//
+        else if (secondInningsSummary.getTotalRuns() < firstInningsSummary.getTotalRuns()) {
+
+            String match_result = secondInningsSummary.getBowlingTeamName().replace('_', ' ') + " Won by " + (firstInningsSummary.getTotalRuns() - secondInningsSummary.getTotalRuns()) + " runs";
+            System.out.println(match_result);
+
 //            winning_team = team_to_bat
 //            losing_team = team_to_bowl
-//        }
+        }
 //
 //        elif (Total2 == Total1) {
 //            winning_team = team_to_bat
