@@ -6,6 +6,8 @@ import Models.Team_Array;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
@@ -171,6 +173,119 @@ public class Excel_Utility {
                 }
             }
         }
+    }
+
+
+    public void playerStandingWriteExcel(ArrayList<Batsman> batting,ArrayList<Bowler> bowling ,boolean isBatsman) throws IOException, InvalidFormatException {
+
+        fis = new FileInputStream(("E:/IIT/1st Year/2nd Trimester/CM1601 [PRO] Programming Fundamentals/CW/fx/src/PlayerStanding/player_standings.xlsx"));
+        wb = (XSSFWorkbook) WorkbookFactory.create(fis);
+        sh = wb.getSheet("Sheet1");
+        int noOfRows = sh.getLastRowNum();
+
+        if (isBatsman){
+            for(Batsman player: batting){
+                playerStandingFindBatsmanRow(sh,player);
+            }
+        }else {
+            for(Bowler player: bowling){
+                playerStandingFindBowlerRow(sh,player);
+            }
+
+        }
+    }
+
+    private static void playerStandingFindBatsmanRow(XSSFSheet sheet, Batsman cellContent) throws IOException {
+        for (Row row : sheet) {
+            for (Cell cell : row) {
+                if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
+                    if (cell.getRichStringCellValue().getString().trim().equals(cellContent.getName())) {
+//                        int currentMatchCount = Integer.parseInt(String.valueOf(row.getCell(1).getRichStringCellValue()));
+                        int currentBatsmanRuns = (int) row.getCell(1).getNumericCellValue();
+                        currentBatsmanRuns+= cellContent.getRuns();
+                        row.getCell(1).setCellValue(currentBatsmanRuns);
+                        fos = new FileOutputStream("E:/IIT/1st Year/2nd Trimester/CM1601 [PRO] Programming Fundamentals/CW/fx/src/PlayerStanding/player_standings.xlsx");
+                        wb.write(fos);
+                        fos.flush();
+                        fos.close();
+                        System.out.println("Done");
+                        //                        System.out.println(cell.getRichStringCellValue().getString()+"--------------------");
+                    }
+                }
+            }
+        }
+    }
+
+    private static void playerStandingFindBowlerRow(XSSFSheet sheet, Bowler cellContent) throws IOException {
+        for (Row row : sheet) {
+            for (Cell cell : row) {
+                if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
+                    if (cell.getRichStringCellValue().getString().trim().equals(cellContent.getName())) {
+//                        int currentMatchCount = Integer.parseInt(String.valueOf(row.getCell(1).getRichStringCellValue()));
+                        int currentBowlerWickets = (int) row.getCell(2).getNumericCellValue();
+                        currentBowlerWickets+= cellContent.getWickets();
+                        row.getCell(2).setCellValue(currentBowlerWickets);
+                        fos = new FileOutputStream("E:/IIT/1st Year/2nd Trimester/CM1601 [PRO] Programming Fundamentals/CW/fx/src/PlayerStanding/player_standings.xlsx");
+                        wb.write(fos);
+                        fos.flush();
+                        fos.close();
+                        System.out.println("Done");
+                        //                        System.out.println(cell.getRichStringCellValue().getString()+"--------------------");
+                    }
+                }
+            }
+        }
+    }
+
+    public void displayPlayerStanding() throws IOException, InvalidFormatException {
+
+        fis = new FileInputStream(("E:/IIT/1st Year/2nd Trimester/CM1601 [PRO] Programming Fundamentals/CW/fx/src/PlayerStanding/player_standings.xlsx"));
+        wb = (XSSFWorkbook) WorkbookFactory.create(fis);
+        sh = wb.getSheet("Sheet1");
+        int noOfRows = sh.getLastRowNum();
+        ArrayList<Batsman> topBatsmen = new ArrayList<>();
+        ArrayList<Bowler> topBowler = new ArrayList<>();
+
+
+        for (Row row : sh) {
+            if(row.getRowNum() != 0){
+                for (Cell cell : row) {
+                    if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
+                        Batsman currentBatsman = new Batsman();
+                        Bowler currentBowler = new Bowler();
+
+                        currentBatsman.setName(row.getCell(0).toString());
+                        currentBowler.setName(row.getCell(0).toString());
+                        currentBatsman.setRuns((int)row.getCell(1).getNumericCellValue());
+                        currentBowler.setWickets((int)row.getCell(2).getNumericCellValue());
+
+                        topBatsmen.add(currentBatsman);
+                        topBowler.add(currentBowler);
+                    }
+                }
+            }
+        }
+
+
+        System.out.println("\n\nTop 5 run scores of the tournament");
+        //sort batsman runs to descending order
+        Collections.sort(topBatsmen,(o1, o2) -> o2.getIntegerRuns().compareTo(o1.getIntegerRuns()));
+
+        System.out.println("\n\nTop 5 wicket takers of the tournament");
+        //sort bowler wickets to descending order
+        Collections.sort(topBowler,(o1, o2) -> o2.getIntegerWickets().compareTo(o1.getIntegerWickets()));
+
+
+
+        for (int i = 0; i < 6; i++) {
+            System.out.println(topBatsmen.get(i).getName()+" "+topBatsmen.get(i).getRuns());
+        }
+
+        for (int i = 0; i < 6; i++) {
+            System.out.println(topBowler.get(i).getName()+" "+topBowler.get(i).getWickets());
+        }
+
+
     }
 
 }

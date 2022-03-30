@@ -74,10 +74,14 @@ public class Main {
         matchSummary.matchSummary(firstInningsSummary,secondInningsSummary);
 
 
+
         Excel_Utility eu = new Excel_Utility();
+        /**
+//        update points table
         eu.writeExcel();
+        **/
 
-
+        eu.displayPlayerStanding();
 
 
 

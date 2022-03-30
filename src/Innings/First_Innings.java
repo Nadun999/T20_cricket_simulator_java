@@ -5,6 +5,7 @@ import Helpers.Helper;
 import Models.Batsman;
 import Models.Bowler;
 import Models.Team_Array;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 
 import java.io.IOException;
 import java.util.*;
@@ -17,6 +18,8 @@ public class First_Innings {
     ArrayList<Batsman> battingTeam = new ArrayList<>();
     ArrayList<Bowler> bowlingTeam = new ArrayList<>();
     Excel_Utility eu = new Excel_Utility();
+    ArrayList<Batsman> batsmanList = new ArrayList();
+    ArrayList<Bowler> bowlerList = new ArrayList();
 
 
     public Team_Array getBattingInfo() {
@@ -87,7 +90,7 @@ public class First_Innings {
 
     }
 
-    public void playFirstInnings() throws IOException {
+    public void playFirstInnings() throws IOException, InvalidFormatException {
 
         bowlingTeam = eu.getBowlingTeamFromExcel(bowlingInfo.getTeamName(),true);
         battingTeam = eu.getBattingTeamFromExcel(battingInfo.getTeamName(),true);
@@ -99,10 +102,10 @@ public class First_Innings {
 
         ArrayList<Batsman> yetToBat = new ArrayList();
         ArrayList<Batsman> dismissedBatsman = new ArrayList();
-        ArrayList<Batsman> batsmanList = new ArrayList();
+
 
         ArrayList<Bowler> yetToBowl = new ArrayList();
-        ArrayList<Bowler> bowlerList = new ArrayList();
+
 
 //        int first_ing_balls = 1;
 //        int TOTAL_BALLS = 120;
@@ -348,7 +351,8 @@ public class First_Innings {
             System.out.println(i.getName()+" "+i.getRuns()+" "+i.getBalls()+" "+i.getWickets()+" "+i.getEconomy());
         }
 
-
+        eu.playerStandingWriteExcel(batsmanList,bowlerList,true);
+        eu.playerStandingWriteExcel(batsmanList,bowlerList,false);
         Total1 = first_ing_total;
     }
 
